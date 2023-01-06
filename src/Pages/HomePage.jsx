@@ -85,7 +85,15 @@ function HomePage({ products }) {
             search={search}
           />
           <ProductFilter filterByPrice={filterByPrice.bind(null, products)} />
-          <ProductList products={filteredProds} />
+          {filteredProds.length <= 0 ? (
+            <div className="min-h-[35vh] h-auto">
+              <p className="font-bold pt-4 text-red-300">
+                There is no products at this price range
+              </p>
+            </div>
+          ) : (
+            <ProductList products={filteredProds} />
+          )}
         </>
       ) : (
         <>
