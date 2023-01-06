@@ -16,7 +16,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<LayoutComponent />}>
+        <Route path="/shopping_cart_deployment" element={<LayoutComponent />}>
           <Route index element={<HomePage products={products} />} />
           <Route
             path="product/:id"
