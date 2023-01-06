@@ -2,11 +2,13 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useGlobalUtility } from '../Store/Utility/Utility.context';
 
+import Swal from 'sweetalert2';
+
 const USER_EMAIL = process.env.REACT_APP_USER_EMAIL;
 const USER_PASSWORD = process.env.REACT_APP_PASSWORD;
 
 function SignInPage() {
-  const { setLogin } = useGlobalUtility();
+  const { setLogin, setLogout } = useGlobalUtility();
   const [credential, setCredential] = useState({ email: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
   const redirect = useNavigate();
@@ -21,14 +23,18 @@ function SignInPage() {
       credential.email === USER_EMAIL &&
       credential.password === USER_PASSWORD
     ) {
-      setLogin(true);
+      setLogin();
       console.log('Yes, you are logged in');
       setCredential({ email: '', password: '' });
       redirect('/');
     } else {
-      setLogin(false);
+      setLogout();
       setCredential({ email: '', password: '' });
-      console.log('Wrong credentials');
+      Swal.fire({
+        title: 'Error',
+        text: 'Invalid Credentials',
+      });
+      return;
     }
   };
 
