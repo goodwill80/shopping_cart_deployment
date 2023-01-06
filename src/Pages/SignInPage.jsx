@@ -23,9 +23,11 @@ function SignInPage() {
     ) {
       setLogin(true);
       console.log('Yes, you are logged in');
+      setCredential({ email: '', password: '' });
       redirect('/');
     } else {
       setLogin(false);
+      setCredential({ email: '', password: '' });
       console.log('Wrong credentials');
     }
   };
