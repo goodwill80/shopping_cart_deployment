@@ -1,10 +1,19 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaDev } from 'react-icons/fa';
 import { BsFillCartFill } from 'react-icons/bs';
 import { useGlobalCartContext } from '../Store/CartStore/Cart.context';
+import { useGlobalUtility } from '../Store/Utility/Utility.context';
 
 function Navbar({ openCartModal }) {
   const { totalQty } = useGlobalCartContext();
+  const { isLoggedIn, setLogout } = useGlobalUtility();
+  const redirect = useNavigate();
+
+  const logout = () => {
+    setLogout();
+    redirect('/');
+  };
+
   return (
     <>
       <nav className="navbar mb-12 shadow-lg bg-neutral text-neutral-content sticky top-0 z-20">
@@ -18,16 +27,42 @@ function Navbar({ openCartModal }) {
           </div>
           {/* LINKS */}
           <div className="flex-1 px-2 mx-2">
-            <div className="flex justify-end">
-              <Link to="/" className="btn btn-ghost btn-sm rounded-btn">
-                Home
-              </Link>
-              <Link to="/signin" className="btn btn-ghost btn-sm rounded-btn">
-                Login
-              </Link>
-              <Link to="/admin" className="btn btn-ghost btn-sm rounded-btn">
-                Admin
-              </Link>
+            <div className="flex justify-end items-baseline">
+              {isLoggedIn ? (
+                <>
+                  <p className="text-orange-400 mr-8 font-bold">
+                    Welcome back, {process.env.REACT_APP_USERNAME}
+                  </p>
+                  <Link to="/" className="btn btn-ghost btn-sm rounded-btn">
+                    Home
+                  </Link>
+                  <Link
+                    to="/admin"
+                    className="btn btn-ghost btn-sm rounded-btn"
+                  >
+                    Admin
+                  </Link>
+                  <p
+                    onClick={logout}
+                    className="btn btn-ghost btn-sm rounded-btn"
+                  >
+                    Logout
+                  </p>
+                </>
+              ) : (
+                <>
+                  <Link to="/" className="btn btn-ghost btn-sm rounded-btn">
+                    Home
+                  </Link>
+                  <Link
+                    to="/signin"
+                    className="btn btn-ghost btn-sm rounded-btn"
+                  >
+                    Login
+                  </Link>
+                </>
+              )}
+
               {/* SHOPPING CART */}
               <div className="btn btn-ghost btn-sm rounded-btn relative">
                 <div onClick={openCartModal}>

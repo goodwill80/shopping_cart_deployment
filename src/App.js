@@ -1,4 +1,5 @@
 import {
+  Navigate,
   HashRouter as Router,
   // BrowserRouter as Router,
   Routes,
@@ -6,6 +7,7 @@ import {
 } from 'react-router-dom';
 
 import { useGlobalProductContext } from './Store/ProductStore/Product.context.jsx';
+import { useGlobalUtility } from './Store/Utility/Utility.context.jsx';
 
 import LayoutComponent from './Layouts/Layout';
 import HomePage from './Pages/HomePage';
@@ -16,20 +18,32 @@ import ProductForm from './Components/Admin.components/ProductForm.jsx';
 import ProductCard from './Components/Admin.components/ProductCard.jsx';
 import ErrorPage from './ErrorPage.jsx';
 import SignInPage from './Pages/SignInPage.jsx';
+import RegisterForm from './Pages/RegisterForm.jsx';
 
 function App() {
   const { products, deleteAll, selectDelete } = useGlobalProductContext();
+  const { isLoggedIn } = useGlobalUtility();
   return (
     <Router>
       <Routes>
         <Route path="/" element={<LayoutComponent />}>
           <Route index element={<HomePage products={products} />} />
-          <Route path="/signin" element={<SignInPage />} />
+          <Route
+            path="/signin"
+            element={isLoggedIn ? <Navigate to="/admin" /> : <SignInPage />}
+          />
+          <Route
+            path="/signup"
+            element={isLoggedIn ? <Navigate to="/admin" /> : <RegisterForm />}
+          />
           <Route
             path="product/:id"
             element={<ProductPage products={products} />}
           />
-          <Route path="admin" element={<AdminPage />}>
+          <Route
+            path="admin"
+            element={!isLoggedIn ? <Navigate to="/signin" /> : <AdminPage />}
+          >
             <Route
               path="view"
               element={

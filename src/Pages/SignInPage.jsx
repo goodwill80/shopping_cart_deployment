@@ -1,4 +1,35 @@
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useGlobalUtility } from '../Store/Utility/Utility.context';
+
+const USER_EMAIL = process.env.REACT_APP_USER_EMAIL;
+const USER_PASSWORD = process.env.REACT_APP_PASSWORD;
+
 function SignInPage() {
+  const { setLogin } = useGlobalUtility();
+  const [credential, setCredential] = useState({ email: '', password: '' });
+  const [showPassword, setShowPassword] = useState(false);
+  const redirect = useNavigate();
+
+  const handleFormChange = (e) => {
+    setCredential({ ...credential, [e.target.name]: e.target.value });
+  };
+
+  const signIn = (e) => {
+    e.preventDefault();
+    if (
+      credential.email === USER_EMAIL &&
+      credential.password === USER_PASSWORD
+    ) {
+      setLogin(true);
+      console.log('Yes, you are logged in');
+      redirect('/');
+    } else {
+      setLogin(false);
+      console.log('Wrong credentials');
+    }
+  };
+
   return (
     <>
       <section className="min-h-[75vh] h-auto">
@@ -13,10 +44,19 @@ function SignInPage() {
             </div>
 
             <div className="md:w-8/12 lg:w-5/12 lg:ml-20">
-              <h1 className="text-4xl pb-4 font-bold">Log-in</h1>
-              <form>
+              <p className="font-bold text-red-300">
+                Login email: user@gmail.com
+              </p>
+              <p className="font-bold text-red-300 mb-2">
+                Login password: 123456
+              </p>
+              <h1 className="text-4xl pb-4 font-bold">Admin Log-in</h1>
+              <form onSubmit={signIn}>
                 <div className="mb-6">
                   <input
+                    onChange={handleFormChange}
+                    name="email"
+                    value={credential.email}
                     type="text"
                     className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                     placeholder="Email address"
@@ -25,33 +65,13 @@ function SignInPage() {
 
                 <div className="mb-6">
                   <input
-                    type="password"
+                    onChange={handleFormChange}
+                    name="password"
+                    value={credential.password}
+                    type={`${showPassword ? 'text' : 'password'}`}
                     className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                     placeholder="Password"
                   />
-                </div>
-
-                <div className="flex justify-between items-center mb-6">
-                  <div className="form-group form-check">
-                    <input
-                      type="checkbox"
-                      className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-                      id="exampleCheck3"
-                      checked
-                    />
-                    <label
-                      className="form-check-label inline-block text-gray-800"
-                      for="exampleCheck2"
-                    >
-                      Remember me
-                    </label>
-                  </div>
-                  <a
-                    href="#!"
-                    className="text-blue-600 hover:text-blue-700 focus:text-blue-700 active:text-blue-800 duration-200 transition ease-in-out"
-                  >
-                    Forgot password?
-                  </a>
                 </div>
 
                 <button
@@ -62,6 +82,23 @@ function SignInPage() {
                 >
                   Sign in
                 </button>
+
+                <div class="flex justify-between items-center mb-6 mt-2">
+                  <div class="form-group form-check">
+                    <input
+                      type="checkbox"
+                      class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                      id="exampleCheck2"
+                      onChange={() => setShowPassword(!showPassword)}
+                    />
+                    <label
+                      class="form-check-label inline-block text-gray-800"
+                      for="exampleCheck2"
+                    >
+                      Show Password
+                    </label>
+                  </div>
+                </div>
 
                 <div className="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5">
                   <p className="text-center font-semibold mx-4 mb-0">OR</p>
@@ -108,6 +145,16 @@ function SignInPage() {
                   Continue with Twitter
                 </a>
               </form>
+              <p class="text-sm font-semibold mt-2 pt-1 mb-0">
+                Don't have an account?
+                <Link
+                  to="/signup"
+                  class="text-red-600 hover:text-red-700 focus:text-red-700 transition duration-200 ease-in-out"
+                >
+                  {' '}
+                  Register
+                </Link>
+              </p>
             </div>
           </div>
         </div>
