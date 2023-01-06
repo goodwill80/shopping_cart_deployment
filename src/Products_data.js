@@ -7,7 +7,7 @@ export const images = [Galaxy, Ipad, Iphone, Pixel];
 
 export const products = [
   {
-    id: 1,
+    id: '1',
     name: 'MacBook Air',
     brand: 'Apple',
     price: 999,
@@ -20,7 +20,7 @@ export const products = [
     toDelete: false,
   },
   {
-    id: 2,
+    id: '2',
     name: 'Galaxy',
     brand: 'Samsung',
     price: 599,
@@ -33,7 +33,7 @@ export const products = [
     toDelete: false,
   },
   {
-    id: 3,
+    id: '3',
     name: 'Spacebook',
     brand: 'Lenovo',
     price: 700,
@@ -46,7 +46,7 @@ export const products = [
     toDelete: false,
   },
   {
-    id: 4,
+    id: '4',
     name: 'Surface',
     brand: 'Microsoft',
     price: 499,
@@ -59,7 +59,7 @@ export const products = [
     toDelete: false,
   },
   {
-    id: 5,
+    id: '5',
     name: 'Pixel 7',
     brand: 'google',
     price: 499,
@@ -72,7 +72,7 @@ export const products = [
     toDelete: false,
   },
   {
-    id: 6,
+    id: '6',
     name: 'Iphone 10',
     brand: 'Apple',
     price: 499,

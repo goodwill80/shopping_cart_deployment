@@ -10,7 +10,7 @@ function ProductCard({ products }) {
   const { broardcastMessage } = useGlobalUtility();
   const redirect = useNavigate();
   const { id } = useParams();
-  const product = products.find((item) => parseInt(item.id) === parseInt(id));
+  const product = products.find((item) => item.id === id);
 
   // Delete Handler
   const deleteHandler = (prod) => {

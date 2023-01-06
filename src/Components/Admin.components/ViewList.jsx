@@ -136,7 +136,7 @@ function ViewList({ products, deleteAll, selectDelete }) {
                         ? 'text-gray-600 block font-bold text-md'
                         : 'block text-white hover:text-blue-300'
                     }
-                    to={`/admin/view/${parseInt(item.id)}`}
+                    to={`/admin/view/${item.id}`}
                   >
                     {toggle ? item.name : <li className="mb-2">{item.name}</li>}
                   </NavLink>

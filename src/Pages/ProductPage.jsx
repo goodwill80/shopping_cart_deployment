@@ -10,11 +10,11 @@ function ProductPage({ products }) {
     useGlobalCartContext();
 
   // retrieve product information on page
-  const product = products.find((item) => item.id === parseInt(id));
+  const product = products.find((item) => item.id === id);
   const { name, brand, price, instock, image, category, description } = product;
 
   // Check if product is already in cart and update dropdown value
-  const cartItemexist = cartItems.find((item) => item.id === parseInt(id));
+  const cartItemexist = cartItems.find((item) => item.id === id);
 
   useEffect(() => {
     if (cartItemexist) setNumber(cartItemexist.count);

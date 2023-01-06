@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { v4 as uuidv4 } from 'uuid';
-import Joi from 'joi-browser';
+// import Joi from 'joi-browser';
 
 import { useGlobalProductContext } from '../../Store/ProductStore/Product.context';
 import { useGlobalUtility } from '../../Store/Utility/Utility.context';
@@ -19,9 +19,9 @@ function ProductForm({ products }) {
     handleFormChange,
     form,
     setForm,
-    schema,
-    setError,
-    error,
+    // schema,
+    // setError,
+    // error,
   } = useGlobalProductContext();
   const { broardcastMessage } = useGlobalUtility();
   const { id } = useParams();
@@ -33,11 +33,12 @@ function ProductForm({ products }) {
       setIsEditing(false);
       setForm(() => {
         return {
+          id: '',
           name: '',
           brand: '',
           category: '',
-          price: '',
-          instock: '',
+          price: 0,
+          instock: 0,
           discount: 0,
           description: '',
         };
@@ -48,19 +49,19 @@ function ProductForm({ products }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const result = Joi.validate(form, schema, { abortEarly: false });
-    const { error } = result;
+    // const result = Joi.validate(form, schema, { abortEarly: false });
+    // const { error } = result;
 
-    if (error) {
-      const errorData = {};
-      for (let item of error.details) {
-        const name = item.path[0];
-        const message = item.message;
-        errorData[name] = message;
-      }
-      setError(errorData);
-      console.log(errorData);
-    }
+    // if (error) {
+    //   const errorData = {};
+    //   for (let item of error.details) {
+    //     const name = item.path[0];
+    //     const message = item.message;
+    //     errorData[name] = message;
+    //   }
+    //   setError(errorData);
+    //   console.log(errorData);
+    // }
 
     if (!checkValidity(form)) {
       broardcastMessage('Invalid input. Please try again');
@@ -69,20 +70,23 @@ function ProductForm({ products }) {
 
     if (isEditing) {
       editProduct(form);
-      const editId = parseInt(form.id);
+      const editId = form.id;
       broardcastMessage(`${form.name} edited successfully!`);
       redirect(`/admin/view/${editId}`);
       return;
     }
     const newId = uuidv4();
+
     addNewProduct({
       ...form,
-      id: parseInt(newId),
+      instock: parseInt(form.instock),
+      id: newId,
       toDelete: false,
       image: images[Math.floor(Math.random() * images.length)],
     });
+    setForm({});
     broardcastMessage(`${form.name} has been added successfully!`);
-    redirect(`/admin/view/${parseInt(newId)}`);
+    redirect(`/admin/view/${newId}`);
   };
 
   return (

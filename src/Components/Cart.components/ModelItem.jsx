@@ -27,7 +27,7 @@ function ModelItem({ item, onClick, addToCartHandler }) {
         />
         <p>{brand}</p>
         <p>{name}</p>
-        <p>$ {price.toFixed(2)}</p>
+        <p>$ {price}</p>
         {/* <p className="ml-2">{count}</p> */}
         <select value={qty} onChange={handleChange}>
           {keys.map((key, index) => (
