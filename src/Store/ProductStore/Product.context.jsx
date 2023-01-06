@@ -2,12 +2,15 @@ import { createContext, useContext, useReducer, useState } from 'react';
 import { productReducer } from './Product.reducer';
 import { products } from '../../Products_data';
 
+import Joi from 'joi-browser';
+
 const ProductContext = createContext();
 
 function ProductContextProvider({ children }) {
   const [allProducts, dispatch] = useReducer(productReducer, products);
   const [form, setForm] = useState({});
   const [isEditing, setIsEditing] = useState(false);
+  const [error, setError] = useState({});
 
   // ADD NEW PRODUCT
   const addNewProduct = (product) => {
@@ -34,11 +37,46 @@ function ProductContextProvider({ children }) {
     dispatch({ type: 'DELETE_SELECTED', products });
   };
 
+  // FORM Validation using JOI
+  const schema = {
+    id: Joi.number(),
+    name: Joi.string().min(1).max(20).required(),
+    brand: Joi.string().min(1).max(20).required(),
+    price: Joi.number().min(1).max(100000000).required(),
+    count: Joi.number().min(0),
+    image: Joi.string().min(0),
+    toDelete: Joi.boolean(),
+    category: Joi.string().min(1).required(),
+    instock: Joi.number().min(1).required(),
+    discount: Joi.number().min(0),
+    description: Joi.string(),
+  };
+
+  const validata = (e) => {
+    const { name, value } = e.target;
+    const objToCompare = { [name]: value };
+    const subSchema = { [name]: schema[name] };
+
+    const result = Joi.validate(objToCompare, subSchema);
+    const { error } = result;
+    return error ? error.details[0].message : null;
+  };
+
   // Handle Form Change
   const handleFormChange = (e) => {
+    const { name } = e.target;
+    const errorMessage = validata(e);
+    let errorData = { ...error };
+
+    if (errorMessage) {
+      errorData[name] = errorMessage;
+    } else {
+      delete errorData[name];
+    }
     setForm((prev) => {
       return { ...prev, [e.target.name]: e.target.value };
     });
+    setError(errorData);
   };
 
   // CHECK VALIDITY
@@ -77,6 +115,9 @@ function ProductContextProvider({ children }) {
     form,
     setForm,
     selectDelete,
+    schema,
+    setError,
+    error,
   };
   return (
     <ProductContext.Provider value={context}>

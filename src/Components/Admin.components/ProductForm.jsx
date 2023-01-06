@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+
 import { v4 as uuidv4 } from 'uuid';
+import Joi from 'joi-browser';
 
 import { useGlobalProductContext } from '../../Store/ProductStore/Product.context';
 import { useGlobalUtility } from '../../Store/Utility/Utility.context';
@@ -17,6 +19,9 @@ function ProductForm({ products }) {
     handleFormChange,
     form,
     setForm,
+    schema,
+    setError,
+    error,
   } = useGlobalProductContext();
   const { broardcastMessage } = useGlobalUtility();
   const { id } = useParams();
@@ -42,6 +47,21 @@ function ProductForm({ products }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const result = Joi.validate(form, schema, { abortEarly: false });
+    const { error } = result;
+
+    if (error) {
+      const errorData = {};
+      for (let item of error.details) {
+        const name = item.path[0];
+        const message = item.message;
+        errorData[name] = message;
+      }
+      setError(errorData);
+      console.log(errorData);
+    }
+
     if (!checkValidity(form)) {
       broardcastMessage('Invalid input. Please try again');
       return;
