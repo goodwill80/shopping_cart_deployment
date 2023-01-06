@@ -46,7 +46,7 @@ function App() {
               />
             </Route>
           </Route>
-          {/* <Route path="*" element={<ErrorPage />} /> */}
+          <Route path="*" element={<ErrorPage />} />
         </Route>
       </Routes>
     </Router>
