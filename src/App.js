@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import {
+  Navigate,
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from 'react-router-dom';
 
 import { useGlobalProductContext } from './Store/ProductStore/Product.context.jsx';
 
@@ -16,7 +21,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/shopping_cart_deployment" element={<LayoutComponent />}>
+        <Route path="/" element={<LayoutComponent />}>
           <Route index element={<HomePage products={products} />} />
           <Route
             path="product/:id"
@@ -41,7 +46,7 @@ function App() {
               />
             </Route>
           </Route>
-          <Route path="*" element={<ErrorPage />} />
+          <Route path="*" element={<Navigate to="/" />} />
         </Route>
       </Routes>
     </Router>
