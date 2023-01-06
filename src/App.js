@@ -15,6 +15,7 @@ import ViewList from './Components/Admin.components/ViewList.jsx';
 import ProductForm from './Components/Admin.components/ProductForm.jsx';
 import ProductCard from './Components/Admin.components/ProductCard.jsx';
 import ErrorPage from './ErrorPage.jsx';
+import SignInPage from './Pages/SignInPage.jsx';
 
 function App() {
   const { products, deleteAll, selectDelete } = useGlobalProductContext();
@@ -23,6 +24,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LayoutComponent />}>
           <Route index element={<HomePage products={products} />} />
+          <Route path="/signin" element={<SignInPage />} />
           <Route
             path="product/:id"
             element={<ProductPage products={products} />}

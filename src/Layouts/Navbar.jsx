@@ -22,11 +22,13 @@ function Navbar({ openCartModal }) {
               <Link to="/" className="btn btn-ghost btn-sm rounded-btn">
                 Home
               </Link>
+              <Link to="/signin" className="btn btn-ghost btn-sm rounded-btn">
+                Login
+              </Link>
               <Link to="/admin" className="btn btn-ghost btn-sm rounded-btn">
                 Admin
               </Link>
               {/* SHOPPING CART */}
-
               <div className="btn btn-ghost btn-sm rounded-btn relative">
                 <div onClick={openCartModal}>
                   <BsFillCartFill size={20} />
