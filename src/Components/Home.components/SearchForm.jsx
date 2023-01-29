@@ -6,7 +6,7 @@ function SearchForm({ query, handleSearchFormChange, search }) {
         onChange={handleSearchFormChange}
         type="text"
         placeholder="Product search"
-        className="input input-bordered"
+        className="input input-bordered w-[300px]"
       />
       <button onClick={() => search(query)} className="btn btn-square">
         <svg

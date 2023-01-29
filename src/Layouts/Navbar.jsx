@@ -16,8 +16,8 @@ function Navbar({ openCartModal }) {
 
   return (
     <>
-      <nav className="navbar mb-12 shadow-lg bg-neutral text-neutral-content sticky top-0 z-20">
-        <div className="container mx-auto">
+      <nav className="navbar py-5 mb-12 shadow-lg bg-neutral text-neutral-content sticky top-0 z-20">
+        <div className="container px-4 md:mx-auto">
           {/* LOGO & TITLE */}
           <div className="flex flex-row justify-center items-center px-2 mx2">
             <FaDev className="inline pr-2 text-3xl" size={35} />
@@ -30,33 +30,39 @@ function Navbar({ openCartModal }) {
             <div className="flex justify-end items-baseline">
               {isLoggedIn ? (
                 <>
-                  <p className="text-orange-400 mr-8 font-bold">
+                  <p className="text-white tracking-wider mr-8 font-bold hidden lg:block">
                     Welcome back, {process.env.REACT_APP_USERNAME}
                   </p>
-                  <Link to="/" className="btn btn-ghost btn-sm rounded-btn">
+                  <Link
+                    to="/"
+                    className="btn btn-ghost btn-sm rounded-btn hidden lg:block"
+                  >
                     Home
                   </Link>
                   <Link
                     to="/admin"
-                    className="btn btn-ghost btn-sm rounded-btn"
+                    className="btn btn-ghost btn-sm rounded-btn hidden lg:block"
                   >
                     Admin
                   </Link>
                   <p
                     onClick={logout}
-                    className="btn btn-ghost btn-sm rounded-btn"
+                    className="btn btn-ghost btn-sm rounded-btn hidden lg:block"
                   >
                     Logout
                   </p>
                 </>
               ) : (
                 <>
-                  <Link to="/" className="btn btn-ghost btn-sm rounded-btn">
+                  <Link
+                    to="/"
+                    className="btn btn-ghost btn-sm rounded-btn hidden lg:block"
+                  >
                     Home
                   </Link>
                   <Link
                     to="/signin"
-                    className="btn btn-ghost btn-sm rounded-btn"
+                    className="btn btn-ghost btn-sm rounded-btn hidden lg:block"
                   >
                     Login
                   </Link>

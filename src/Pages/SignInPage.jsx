@@ -40,10 +40,10 @@ function SignInPage() {
 
   return (
     <>
-      <section className="min-h-[75vh] h-auto">
+      <section className="min-h-[70vh] h-auto">
         <div className="container px-6 py-12 h-full">
           <div className="flex justify-center items-center flex-wrap h-full g-6 text-gray-800">
-            <div className="md:w-8/12 lg:w-6/12 mb-12 md:mb-0">
+            <div className="hidden lg:block lg:w-6/12 mb-12 ">
               <img
                 src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
                 className="w-full"
@@ -51,13 +51,13 @@ function SignInPage() {
               />
             </div>
 
-            <div className="md:w-8/12 lg:w-5/12 lg:ml-20">
-              <p className="font-bold text-red-300">
+            <div className="mx-auto w-8/12 md:6/12 lg:w-5/12 lg:ml-20">
+              {/* <p className="font-bold text-red-300">
                 Login email: user@gmail.com
               </p>
               <p className="font-bold text-red-300 mb-2">
                 Login password: 123456
-              </p>
+              </p> */}
               <h1 className="text-4xl pb-4 font-bold">Admin Log-in</h1>
               <form onSubmit={signIn}>
                 <div className="mb-6">
